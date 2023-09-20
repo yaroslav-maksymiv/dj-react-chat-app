@@ -9,6 +9,7 @@ import {
     GOOGLE_AUTH_FAIL,
     LOGOUT
 } from '../constants/authenticationConstants'
+import { UPDATE_USER } from '../constants/userConstants'
 
 const initialState = {
     userInfo: {},
@@ -26,6 +27,14 @@ export const loginReducer = (state = initialState, action) => {
             return { loading: false, isAuthenticated: true, userInfo: action.payload }
         case LOGIN_FAIL:
             return { loading: false, error: action.payload }
+        case UPDATE_USER:
+            return {
+                ...state,
+                userInfo: {
+                    token: state.userInfo.token,
+                    ...action.payload
+                }
+            }
         case GOOGLE_AUTH_SUCCESS:
             localStorage.setItem('access', action.payload.access)
             return {

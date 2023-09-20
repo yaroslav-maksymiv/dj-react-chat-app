@@ -11,6 +11,24 @@ from .serializers import CustomUserSerializer, CustomUserSerializerWithToken, My
 User = get_user_model()
 
 
+@api_view(['POST'])
+def update_user(request):
+    data = request.data
+    avatar = request.FILES.get('avatar')
+    try:
+        user = User.objects.get(email=request.user.email)
+        if 'first_name' in data:
+            user.first_name = data['first_name']
+        if 'last_name' in data:
+            user.last_name = data['last_name']
+        if avatar:
+            user.profile_picture = avatar    
+        user.save()    
+        return Response(CustomUserSerializer(user).data)
+    except Exception as e:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_user(request):
@@ -19,6 +37,7 @@ def get_user(request):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def register_user(request):
     data = request.data
     try:

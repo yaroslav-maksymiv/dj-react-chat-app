@@ -15,8 +15,8 @@ export const HomeScreen = () => {
     }, [userInfo])
 
     return (
-        <>
-            Home
-        </>
+        <div className='home'>
+            <div className='home__text'>Select a chat to start communicating.</div>
+        </div>
     )
 }
