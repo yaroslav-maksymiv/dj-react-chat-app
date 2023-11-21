@@ -37,6 +37,8 @@ __pycache__
 /backend/.env.test.local
 /backend/.env.production.local
 
+/swipe-chat-platform
+
 # Ignore editor-specific files and directories
 .vscode/
 .idea/
