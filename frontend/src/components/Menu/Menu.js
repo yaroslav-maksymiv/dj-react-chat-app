@@ -11,10 +11,10 @@ export const Menu = () => {
     return (
         <>
             <Navigation setActiveTab={setActiveTab} activeTab={activeTab} />
-            <div class="sidebar" id="sidebar">
-                <div class="container">
-                    <div class="col-md-12">
-                        <div class="tab-content">
+            <div className="sidebar" id="sidebar">
+                <div className="container">
+                    <div className="col-md-12">
+                        <div className="tab-content">
                             {activeTab === 'Discussions' && <Discussions />}
                             {activeTab === 'Notifications' && <Notifications />}
                             {activeTab === 'Settings' && <Settings />}

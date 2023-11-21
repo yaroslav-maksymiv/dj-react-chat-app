@@ -5,7 +5,7 @@ const baseURL = process.env.REACT_APP_API_URL
 export const GoogleLoginButton = ({ buttonText = 'Continue with Google' }) => {
     const handleGoogleAuthenticate = async () => {
         try {
-            const res = await axios.get(`${baseURL}/api/auth/o/google-oauth2/?redirect_uri=http://localhost:3000`)
+            const res = await axios.get(`${baseURL}/api/auth/o/google-oauth2/?redirect_uri=http://127.0.0.1:8000`)
             window.location.replace(res.data.authorization_url)
         } catch (error) {
             console.log('Error with google authentication')

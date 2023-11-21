@@ -1,14 +1,13 @@
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import {useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {useEffect} from 'react'
 
 export const HomeScreen = () => {
     const navigate = useNavigate()
 
-    const { userInfo } = useSelector(state => state.userLogin)
+    const {userInfo} = useSelector(state => state.userLogin)
 
     useEffect(() => {
-
         if (!userInfo) {
             navigate('/login')
         }
@@ -16,7 +15,19 @@ export const HomeScreen = () => {
 
     return (
         <div className='home'>
-            <div className='home__text'>Select a chat to start communicating.</div>
+            <div className="main">
+                <div className="chat">
+                    <div className="content empty">
+                        <div className="container">
+                            <div className="col-md-12">
+                                <div className="no-messages">
+                                    <p>Select a chat to start communicating.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

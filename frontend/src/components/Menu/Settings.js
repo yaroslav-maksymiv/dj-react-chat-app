@@ -3,6 +3,8 @@ import { useState } from 'react'
 
 import { AccountSettings } from './AccountSettings'
 
+const baseUrl = process.env.REACT_APP_API_URL
+
 export const Settings = () => {
     const { userInfo } = useSelector(state => state.userLogin)
 
@@ -17,27 +19,14 @@ export const Settings = () => {
     }
 
     return (
-        <div class="tab-pane fade active show" id="settings">
-            <div class="settings">
-                <div class="profile">
-                    <img class="avatar-xl" src={userInfo.profile_picture ? userInfo.profile_picture : require('../../assets/common/user.png')} alt="avatar" />
+        <div className="tab-pane fade active show" id="settings">
+            <div className="settings">
+                <div className="profile">
+                    <img className="avatar-xl" src={userInfo.profile_picture ? `${baseUrl}${userInfo.profile_picture}` : require('../../assets/common/user.png')} alt="avatar" />
                     <h1><div>{userInfo.first_name} {userInfo.last_name}</div></h1>
-                    <div class="stats">
-                        <div class="item">
-                            <h2>122</h2>
-                            <h3>Fellas</h3>
-                        </div>
-                        <div class="item">
-                            <h2>305</h2>
-                            <h3>Chats</h3>
-                        </div>
-                        <div class="item">
-                            <h2>1538</h2>
-                            <h3>Posts</h3>
-                        </div>
-                    </div>
+                    <h6><div>{userInfo.email}</div></h6>
                 </div>
-                <div class="categories" id="accordionSettings">
+                <div className="categories" id="accordionSettings">
                     <h1>Settings</h1>
                     
                     <AccountSettings handleCategoryClick={handleCategoryClick} visibleCategory={visibleCategory} />

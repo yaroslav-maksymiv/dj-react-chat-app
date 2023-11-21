@@ -10,7 +10,11 @@ import {
     GOOGLE_AUTH_FAIL
 } from '../constants/authenticationConstants'
 
+import api from '../axiosConfig'
+
 import axios from 'axios'
+
+axios.defaults.withCredentials = true
 
 const config = {
     headers: {
@@ -27,13 +31,13 @@ export const getUser = (token) => async (dispatch) => {
             type: LOGIN_REQUEST
         })
 
-        const response = await axios.get(`${baseUrl}/api/users/me/`, {
+        const response = await api.get(`/api/users/me/`, {
             headers: {
                 'Authorization': `JWT ${token}`
             }
         })
 
-        const data = { ...response.data, 'token': token }
+        const data = {...response.data, 'token': token}
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -64,19 +68,20 @@ export const googleAuthenticate = (state, code) => async (dispatch) => {
         }
         const formBody = Object.keys(details).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(details[key])).join('&')
         try {
+            console.log('try')
             const response = await axios.post(`${baseUrl}/api/auth/o/google-oauth2/?${formBody}`, config)
-
-            dispatch({
-                type: GOOGLE_AUTH_SUCCESS,
-                payload: response.data
-            })
+            console.log(response, 'sukes')
+            // dispatch({
+            //     type: GOOGLE_AUTH_SUCCESS,
+            //     payload: response.data
+            // })
             // dispatch(getUser(response.data.access))
         } catch (error) {
             console.log(error)
             console.log(`${baseUrl}/api/auth/o/google-oauth2/?${formBody}`);
-            dispatch({
-                type: GOOGLE_AUTH_FAIL
-            })
+            // dispatch({
+            //     type: GOOGLE_AUTH_FAIL
+            // })
         }
     }
 }
@@ -95,7 +100,7 @@ export const userRegister = (email, password, firstName, lastName) => async (dis
             lastName: lastName
         }
 
-        const { data } = await axios.post(baseUrl + '/api/users/register/', request_data, config)
+        const {data} = await api.post(`/api/users/register/`, request_data, config)
 
         dispatch({
             type: REGISTER_SUCCESS,
@@ -106,15 +111,16 @@ export const userRegister = (email, password, firstName, lastName) => async (dis
             payload: data
         })
         localStorage.setItem('userInfo', JSON.stringify(data))
-        return data
+        return Promise.resolve(data)
     } catch (error) {
-        console.log(error);
+        const errorText = error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message
         dispatch({
             type: REGISTER_FAIL,
-            payload: error.response && error.response.data.detail
-                ? error.response.data.detail
-                : error.message
+            payload: errorText
         })
+        return Promise.reject(errorText)
     }
 }
 
@@ -130,7 +136,7 @@ export const userLogin = (email, password) => async (dispatch) => {
             password: password,
         }
 
-        const { data } = await axios.post(baseUrl + '/api/users/login/', request_data, config)
+        const {data} = await api.post(`/api/users/login/`, request_data, config)
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -138,7 +144,7 @@ export const userLogin = (email, password) => async (dispatch) => {
         })
 
         localStorage.setItem('userInfo', JSON.stringify(data))
-        return data
+        return Promise.resolve(data)
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
@@ -146,6 +152,7 @@ export const userLogin = (email, password) => async (dispatch) => {
                 ? error.response.data.detail
                 : error.message
         })
+        return Promise.reject(error)
     }
 }
 
