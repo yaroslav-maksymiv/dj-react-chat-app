@@ -26,6 +26,12 @@ export const LoginScreen = () => {
         })
     }
 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+        }
+    }
+
     const isEmailValid = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         return emailRegex.test(email)
@@ -91,14 +97,15 @@ export const LoginScreen = () => {
                                     <div className="form-group">
                                         <input onChange={e => handleChange(e)} name='email' type="email" id="inputEmail"
                                                className="form-control" placeholder="Email Address"
-                                               onKeyPress={(e) => e.preventDefault()}/>
+                                               onKeyPress={handleKeyPress}
+                                        />
                                         <button className="btn icon"><i className="material-icons">mail_outline</i>
                                         </button>
                                     </div>
                                     <div className="form-group">
                                         <input onChange={e => handleChange(e)} name='password' type="password"
                                                id="inputPassword" className="form-control" placeholder="Password"
-                                               onKeyPress={(e) => e.preventDefault()}
+                                               onKeyPress={handleKeyPress}
                                         />
                                         <button className="btn icon"><i className="material-icons">lock_outline</i>
                                         </button>

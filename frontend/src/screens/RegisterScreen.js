@@ -29,13 +29,15 @@ export const RegisterScreen = () => {
         })
     }
 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+        }
+    }
+
     const isEmailValid = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         return emailRegex.test(email)
-    }
-
-    const passwordValid = (password) => {
-
     }
 
     const validateForm = (form) => {
@@ -123,14 +125,14 @@ export const RegisterScreen = () => {
                                         <div className="form-group">
                                             <input onChange={e => handleChange(e)} name='firstName' type="text"
                                                    id="inputFirstName" className="form-control"
-                                                   placeholder="First Name" onKeyPress={(e) => e.preventDefault()}/>
+                                                   placeholder="First Name" onKeyPress={handleKeyPress}/>
                                             <button className="btn icon"><i
                                                 className="material-icons">person_outline</i></button>
                                         </div>
                                         <div className="form-group">
                                             <input onChange={e => handleChange(e)} name='lastName' type="text"
                                                    id="inputLastName" className="form-control" placeholder="Last Name"
-                                                   onKeyPress={(e) => e.preventDefault()}/>
+                                                   onKeyPress={handleKeyPress}/>
                                             <button className="btn icon"><i
                                                 className="material-icons">person_outline</i></button>
                                         </div>
@@ -138,21 +140,21 @@ export const RegisterScreen = () => {
                                     <div className="form-group">
                                         <input onChange={e => handleChange(e)} name='email' type="email" id="inputEmail"
                                                className="form-control" placeholder="Email Address"
-                                               onKeyPress={(e) => e.preventDefault()}/>
+                                               onKeyPress={handleKeyPress}/>
                                         <button className="btn icon"><i className="material-icons">mail_outline</i>
                                         </button>
                                     </div>
                                     <div className="form-group">
                                         <input onChange={e => handleChange(e)} name='password1' type="password"
                                                id="inputPassword1" className="form-control" placeholder="Password"
-                                               onKeyPress={(e) => e.preventDefault()}/>
+                                               onKeyPress={handleKeyPress}/>
                                         <button className="btn icon"><i className="material-icons">lock_outline</i>
                                         </button>
                                     </div>
                                     <div className="form-group">
                                         <input onChange={e => handleChange(e)} name='password2' type="password"
                                                id="inputPassword2" className="form-control"
-                                               placeholder="Password repeat" onKeyPress={(e) => e.preventDefault()}/>
+                                               placeholder="Password repeat" onKeyPress={handleKeyPress}/>
                                         <button className="btn icon"><i className="material-icons">lock_outline</i>
                                         </button>
                                     </div>
